@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Alishba</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    h1 {
+      font-size: 2.8em;
+      margin-bottom: 10px;
+      animation: pulse 1.5s infinite alternate;
+    }
+    h2 {
+      font-size: 1.4em;
+      font-weight: normal;
+      margin-bottom: 30px;
+    }
+    button {
+      font-size: 1.2em;
+      margin: 10px;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 12px;
+      background-color: #ff007f;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #e60073;
+    }
+    #question {
+      margin-top: 20px;
+      font-size: 1.3em;
+    }
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.05); }
+    }
+  </style>
+</head>
+<body>
+  <h1>🎉 Happy Birthday Alishba! 🎂</h1>
+  <h2>You’re not getting older, just becoming more legendary 😎</h2>
+
+  <div id="question">Q1: Kya cake khud khaogi ya dusron ko bhi dogi? 🎂</div>
+  <div>
+    <button onclick="next()">Yes</button>
+    <button onclick="next()">No</button>
+  </div>
+
+  <script>
+    const qs = [
+      "Q2: Kya gift lena pasand hai ya bas reels pe khush ho? 📱",
+      "Q3: Kya tum har birthday pe thoda zyada pretty ho jaati ho? 😍",
+      "Q4: Kya party plan tumhara hota hai ya Google ka? 🎈",
+      "Q5: Kya selfie bina filter ab bhi hoti hai? 📸",
+      "Q6: Kya birthday pe tum sirf wishes leti ho ya shopping bhi? 🛍️",
+      "Q7: Kya tumhare jokes funny hote hain ya sirf tumhe lagte hain? 😂",
+      "Q8: Kya tum party mein sabse zyada cake kha jaati ho? 🎂",
+      "Q9: Kya tumhara attitude birthday ke sath double ho jaata hai? 😎",
+      "Q10: Kya tumhe ye website pasand aayi? 😉"
+    ];
+    let i = 0;
+    const q = document.getElementById("question");
+
+    function next() {
+      if (i < qs.length) {
+        q.innerText = qs[i];
+        i++;
+      } else {
+        q.innerText = "🎊 That's it, Alishba! Now go and enjoy your day like the queen you are 👑";
+      }
+    }
+  </script>
+</body>
+</html>
