@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FantasyGems Wingo Predictor Panel</title>
+  <title>FantasyGems Smart Paste Predictor</title>
   <style>
     body {
       background-color: #0f0f0f;
@@ -44,42 +44,50 @@
   </style>
 </head>
 <body>
-  <h1>🎯 FantasyGems Wingo Predictor</h1>
-  <p>Enter last 10 results (only numbers, one per line):</p>
-  <textarea id="inputBox" placeholder="Example:\n8\n0\n3\n1\n5\n7\n2\n0\n9\n4"></textarea><br>
-  <button onclick="predictNext()">Predict Next Round</button>
+  <h1>🎯 FantasyGems Smart Paste Predictor</h1>
+  <p>Paste your last 10 rounds like this:<br><code>405 Red 6<br>404 Green 2<br>403 Violet 0</code></p>
+  <textarea id="inputBox" placeholder="Paste rounds like: 405 Red 6\n404 Violet 0\n403 Green 2"></textarea><br>
+  <button onclick="smartPredict()">Predict Next Round</button>
 
   <div class="output" id="predictionBox">
     <h3>Prediction will appear here...</h3>
   </div>
 
   <script>
-    function predictNext() {
-      const input = document.getElementById('inputBox').value.trim().split('\n').map(x => parseInt(x));
+    function smartPredict() {
+      const input = document.getElementById('inputBox').value.trim().split('\\n');
       if (input.length < 5) {
-        document.getElementById('predictionBox').innerHTML = '<strong>Enter at least 5 recent numbers!</strong>';
+        document.getElementById('predictionBox').innerHTML = '<strong>Enter at least 5 rounds!</strong>';
         return;
       }
 
       let bigCount = 0, smallCount = 0, redCount = 0, greenCount = 0, violetCount = 0;
 
-      input.forEach(num => {
+      input.forEach(line => {
+        const parts = line.trim().split(/\\s+/);
+        if (parts.length !== 3) return;
+        const color = parts[1].toLowerCase();
+        const num = parseInt(parts[2]);
+
         if (num >= 5) bigCount++; else smallCount++;
-        if (num === 0 || num === 5) violetCount++;
-        else if ([1, 3, 7, 9].includes(num)) greenCount++;
-        else redCount++;
+
+        if (color.includes('red')) redCount++;
+        else if (color.includes('green')) greenCount++;
+        else if (color.includes('violet')) violetCount++;
       });
 
       let predictedSize = bigCount > smallCount ? 'Small' : 'Big';
+      let predictedColor = 'Red';
 
-      let color = 'Red';
-      if (greenCount > redCount && greenCount > violetCount) color = 'Green';
-      else if (violetCount > redCount && violetCount > greenCount) color = 'Violet';
+      if (greenCount > redCount && greenCount > violetCount) predictedColor = 'Green';
+      else if (violetCount > redCount && violetCount > greenCount) predictedColor = 'Violet';
+
+      const nextPeriod = parseInt(input[0].split(/\\s+/)[0]) + 1;
 
       document.getElementById('predictionBox').innerHTML = `
-        <h2>🧠 Prediction:</h2>
+        <h2>🧠 Prediction for Period ${nextPeriod}:</h2>
         <p><strong>Next Size:</strong> ${predictedSize}</p>
-        <p><strong>Next Color:</strong> ${color}</p>
+        <p><strong>Next Color:</strong> ${predictedColor}</p>
         <p>📊 Based on last ${input.length} rounds</p>
       `;
     }
