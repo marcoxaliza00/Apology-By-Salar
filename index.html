@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>I'm Sorry — Just Listen Once...</title>
+  <title>I'm Sorry — Please Listen Once</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -19,7 +19,6 @@
       margin: auto;
       padding: 30px;
       text-align: center;
-      animation: fadeIn 3s ease-in-out;
     }
     h1 {
       font-size: 3rem;
@@ -27,65 +26,210 @@
       font-family: 'Great Vibes', cursive;
       animation: fadeIn 2s ease-in-out;
     }
-    h2 {
-      margin-top: 10px;
-      font-size: 1.2rem;
-      font-weight: 300;
-      color: #ddd;
-    }
-    .message {
-      margin-top: 40px;
-      font-size: 1.4rem;
-      font-weight: 300;
+    .message, .tagline, .signature {
       animation: slideUp 2s ease-in-out;
     }
+    .message {
+      font-size: 1.3rem;
+      margin-top: 30px;
+    }
     .tagline {
+      margin-top: 20px;
       font-size: 1.1rem;
       color: #bbb;
-      margin-top: 20px;
     }
     .signature {
-      font-size: 1.5rem;
-      margin-top: 60px;
+      font-size: 1.4rem;
+      margin-top: 40px;
       color: #c2f0ff;
-      letter-spacing: 1px;
       font-weight: bold;
-      animation: fadeIn 4s ease-in-out;
+    }
+    .question-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #555;
+      padding: 20px;
+      margin: 30px auto;
+      border-radius: 10px;
+    }
+    .question {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+    }
+    .btn-group button {
+      background: #00e1ff;
+      border: none;
+      color: #000;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .response {
+      margin-top: 10px;
+      color: #ffdaec;
+      font-size: 1rem;
+      min-height: 20px;
+    }
+    audio {
+      margin-top: 40px;
+      outline: none;
     }
     @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
+      from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
     }
     @keyframes slideUp {
       from { opacity: 0; transform: translateY(40px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    audio {
-      margin-top: 40px;
-      outline: none;
+    .typing {
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid #ff8ba7;
+      width: 0;
+      animation: typing 4s steps(40, end) forwards;
+      margin: 30px auto 0 auto;
+      font-size: 1.3rem;
+      color: #fce4ec;
+    }
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -1;
+    }
+    .heart {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      background: red;
+      transform: rotate(45deg);
+      animation: float 6s infinite;
+    }
+    .heart:before,
+    .heart:after {
+      content: "";
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+      position: absolute;
+    }
+    .heart:before { top: -10px; left: 0; }
+    .heart:after { left: -10px; top: 0; }
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-800px) rotate(45deg);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="hearts"></div>
   <div class="container">
     <h1>I'm Sorry...</h1>
-    <h2>Please just listen once, with your heart.</h2>
-
-    <div class="message">
-      Mujhe har pal tumhari kami mehsoos hoti hai.<br />
-      I miss you more than words can explain.
-    </div>
-
-    <div class="tagline">
-      Maybe we both made mistakes... but I still care — a lot.
-    </div>
-
-    <div class="signature">— SALAR X KHAN</div>
+    <p class="typing">Please just listen once, with your heart.</p>
+    <p class="message">Mujhy har pal tumhari Kami mehsoos H0ti Hai'w<\3.<br />
+    I miss you more than words can explain.</p>
+    <p class="tagline">Maybe we both made mistakes... but I still care — a lot.</p>
+    <p class="signature">— SALAR X KHAN</p>
 
     <audio autoplay loop controls>
       <source src="https://files.catbox.moe/5qdwzk.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio>
+
+    <div id="qa-section"></div>
   </div>
+
+  <script>
+    // heart animation
+    const heartContainer = document.querySelector('.hearts');
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+      heartContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 300);
+
+    // questions script
+    const questions = [
+      {
+        q: "Kya tum abhi bhi mujhse naraz ho?",
+        yes: "Toh kitne din aur ho? 😂",
+        no: "Tuh toh meri jaan nikli yaar 💖"
+      },
+      {
+        q: "Main serious hoon, believe karo gi?",
+        yes: "Bas yeh sun'na tha, ab raat ko chain se soyenge.",
+        no: "Tuh dil todne wali nikli 😭"
+      },
+      {
+        q: "Kya meri maafi sweet treat se accept hogi?",
+        yes: "Chocolate bhej di 🛵💨",
+        no: "Toh chappal bhi chalega kya? 😅"
+      },
+      {
+        q: "Chalo maan lo tum meri queen ho?",
+        yes: "Toh fir king ka haq bhi toh banta hai 😎",
+        no: "Toh fir salary bhi queen wali do 💸"
+      },
+      {
+        q: "Kya ab bhi kabhi kabhi meri yaad aati hai?",
+        yes: "Mujhe bhi har waqt bas tera hi khayal aata hai...",
+        no: "Shayad mujhe bhool jaana hi tumhari khushi hai 😔"
+      }
+    ];
+
+    let current = 0;
+    const container = document.getElementById('qa-section');
+
+    function renderQuestion() {
+      if (current >= questions.length) {
+        container.innerHTML = '<h3 style="margin-top:40px; color:#ff8ba7">Maafi na bhi do... lekin yaad rakhna, SALAR X KHAN tumse ab bhi utna hi pyar karta hai jitna pehle karta tha. 💔</h3>';
+        return;
+      }
+      const qObj = questions[current];
+      container.innerHTML = `
+        <div class="question-box">
+          <div class="question">${qObj.q}</div>
+          <div class="btn-group">
+            <button onclick="respond('yes')">Yes</button>
+            <button onclick="respond('no')">No</button>
+          </div>
+          <div class="response" id="response"></div>
+        </div>
+      `;
+    }
+
+    function respond(type) {
+      const res = questions[current][type];
+      document.getElementById('response').innerText = res;
+      setTimeout(() => {
+        current++;
+        renderQuestion();
+      }, 2500);
+    }
+
+    renderQuestion();
+  </script>
 </body>
-</html>
+  </html>
+  
